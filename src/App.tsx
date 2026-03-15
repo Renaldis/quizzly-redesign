@@ -8,6 +8,7 @@ import QuizList from './app/(authenticated)/dashboard/quiz/quizz';
 import QuizActive from './app/(authenticated)/dashboard/quiz/quiz-active';
 import QuizFinish from './app/(authenticated)/dashboard/quiz/quiz-finish';
 import History from './app/(authenticated)/dashboard/quiz/history';
+import NotFound from './app/_components/not-found';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="history" element={<History />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
