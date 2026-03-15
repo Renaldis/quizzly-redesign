@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Modal, Typography, Tag } from 'antd';
 import { PlayCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useQuizStore } from '../../../api/quizStore';
+import { useQuizStore } from '../../../../../store/quiz-store';
 
 const { Text } = Typography;
 
@@ -14,6 +14,7 @@ export default function QuizResumeModal() {
 
   useEffect(() => {
     if (status === 'active' && questions.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsOpen(true);
     }
   }, [status, questions]);
