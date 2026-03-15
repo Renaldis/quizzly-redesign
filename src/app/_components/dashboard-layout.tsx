@@ -18,8 +18,9 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { QuizResumeDialog } from './quiz-resume-dialog';
-import { UserAvatar } from 'admiral';
+
 import { useAuthStore } from '../../../store/auth-store';
+import UserAvatar from '../../libs/admiral/UserAvatar';
 
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
