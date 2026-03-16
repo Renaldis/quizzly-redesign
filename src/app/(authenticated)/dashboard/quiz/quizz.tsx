@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Row, Col, Card, Typography, Flex, Tag, Grid } from 'antd';
 import DialogStartQuiz from '../_components/dialog-start-quiz';
-import { useQuizStore } from '../../../../../store/quiz-store';
+import { useQuizStore } from '../../../../store/quiz-store';
 import type { Category } from '../../../../types/quiz';
 import { categories } from '../../../../libs/quizList';
 

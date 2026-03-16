@@ -7,7 +7,7 @@ import {
   AlertFilled,
   RightOutlined,
 } from '@ant-design/icons';
-import { useQuizStore } from '../../../../../store/quiz-store';
+import { useQuizStore } from '../../../../store/quiz-store';
 
 const { Title, Text } = Typography;
 

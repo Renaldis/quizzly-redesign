@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Flex, Typography } from 'antd';
 import { Trophy, RefreshCcw, LayoutDashboard } from 'lucide-react';
-import { useQuizStore } from '../../../../../store/quiz-store';
+import { useQuizStore } from '../../../../store/quiz-store';
 
 const { Title, Text } = Typography;
 

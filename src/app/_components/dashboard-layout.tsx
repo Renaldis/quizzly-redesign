@@ -19,7 +19,7 @@ import {
 } from '@ant-design/icons';
 import { QuizResumeDialog } from './quiz-resume-dialog';
 
-import { useAuthStore } from '../../../store/auth-store';
+import { useAuthStore } from '../../store/auth-store';
 import UserAvatar from '../../libs/admiral/UserAvatar';
 
 const { Header, Sider, Content } = Layout;

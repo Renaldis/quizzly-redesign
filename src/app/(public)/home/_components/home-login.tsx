@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { User, Lock } from 'lucide-react';
-import { useAuthStore } from '../../../../../store/auth-store';
+import { useAuthStore } from '../../../../store/auth-store';
 import { ACCOUNT } from '../../../../libs/account';
 import type { TLoginPayload } from '../../../../api/auth/type';
 

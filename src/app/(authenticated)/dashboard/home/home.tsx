@@ -17,8 +17,8 @@ import {
   ArrowRightOutlined,
 } from '@ant-design/icons';
 import DialogStartQuiz from '../_components/dialog-start-quiz';
-import { useQuizStore } from '../../../../../store/quiz-store';
-import { useAuthStore } from '../../../../../store/auth-store';
+import { useQuizStore } from '../../../../store/quiz-store';
+import { useAuthStore } from '../../../../store/auth-store';
 import type { Category } from '../../../../types/quiz';
 import { categories } from '../../../../libs/quizList';
 

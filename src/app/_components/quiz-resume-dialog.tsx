@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Typography, Flex } from 'antd';
 import { PlayCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useQuizStore } from '../../../store/quiz-store';
+import { useQuizStore } from '../../store/quiz-store';
 
 const { Text } = Typography;
 

@@ -16,7 +16,7 @@ import {
   CalendarOutlined,
 } from '@ant-design/icons';
 import { History as HistoryIcon } from 'lucide-react';
-import { useQuizStore } from '../../../../../store/quiz-store';
+import { useQuizStore } from '../../../../store/quiz-store';
 
 const { Title, Text } = Typography;
 const { useBreakpoint } = Grid;
