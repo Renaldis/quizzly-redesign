@@ -19,8 +19,10 @@ import {
 import DialogStartQuiz from '../_components/dialog-start-quiz';
 import { useQuizStore } from '../../../../store/quiz-store';
 import { useAuthStore } from '../../../../store/auth-store';
+
 import type { Category } from '../../../../types/quiz';
 import { categories } from '../../../../libs/quizList';
+import { useStartQuiz } from '../../../_hooks/use-quiz';
 
 const { Title, Paragraph, Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -28,36 +30,45 @@ const { useBreakpoint } = Grid;
 export default function DashboardHome() {
   const { user } = useAuthStore();
   const navigate = useNavigate();
-  const fetchQuiz = useQuizStore((state) => state.fetchQuiz);
+  const { setQuestions, setStatus } = useQuizStore();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
 
   const [open, setOpen] = useState(false);
   const [quizData, setQuizData] = useState<Category>();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleStartQuiz = async (opts: {
+  const { mutate: startQuiz, isPending } = useStartQuiz({
+    onSuccess: (questions, variables) => {
+      setQuestions(questions, variables.durationMinutes);
+      setOpen(false);
+      navigate('/dashboard/quizz/active');
+    },
+    onError: () => {
+      setStatus('error');
+    },
+  });
+
+  const handleStartQuiz = (opts: {
     type: 'multiple' | 'boolean';
     difficulty: 'easy' | 'medium' | 'hard';
     durationMinutes: number;
   }) => {
     if (!quizData) return;
-    setIsLoading(true);
-    try {
-      await fetchQuiz({
-        amount: 10,
-        category: quizData.id,
-        difficulty: opts.difficulty,
-        type: opts.type,
-        durationMinutes: opts.durationMinutes,
-      });
-      setOpen(false);
-      navigate('/dashboard/quizz/active');
-    } catch (error) {
-      console.error('Gagal memulai quiz:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    startQuiz({
+      amount: 10,
+      category: quizData.id,
+      difficulty: opts.difficulty,
+      type: opts.type,
+      durationMinutes: opts.durationMinutes,
+    });
+  };
+
+  const handleQuickStart = () => {
+    startQuiz({
+      amount: 10,
+      durationMinutes: 5,
+    });
+    navigate('/dashboard/quizz/active');
   };
 
   return (
@@ -131,6 +142,8 @@ export default function DashboardHome() {
                 type="primary"
                 size="large"
                 block={isMobile}
+                loading={isPending}
+                onClick={handleQuickStart}
                 style={{
                   background: '#2563eb',
                   fontWeight: 600,
@@ -172,8 +185,8 @@ export default function DashboardHome() {
                 }}
                 styles={{ body: { padding: 0 } }}
                 onClick={() => {
-                  setOpen(true);
                   setQuizData(category);
+                  setOpen(true);
                 }}
               >
                 <div
@@ -213,7 +226,7 @@ export default function DashboardHome() {
         setOpen={setOpen}
         quizData={quizData}
         onStartQuiz={handleStartQuiz}
-        isLoading={isLoading}
+        isLoading={isPending}
       />
     </div>
   );

@@ -3,7 +3,9 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './global.css';
 import { ConfigProvider } from 'antd';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider
@@ -15,7 +17,9 @@ createRoot(document.getElementById('root')!).render(
         },
       }}
     >
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </ConfigProvider>
   </StrictMode>,
 );

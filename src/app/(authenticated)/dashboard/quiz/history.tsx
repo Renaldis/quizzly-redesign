@@ -225,6 +225,7 @@ export default function History() {
             columns={columns}
             rowKey="id"
             scroll={{ x: 500 }}
+            style={{ padding: '0 0 8px' }}
             pagination={{
               current: currentPage,
               pageSize: itemsPerPage,
@@ -235,6 +236,11 @@ export default function History() {
                 ? undefined
                 : (total, range) =>
                     `${range[0]}-${range[1]} of ${total} records`,
+              style: {
+                padding: '12px 16px',
+                margin: 0,
+                borderTop: '1px solid #f0f0f0',
+              },
             }}
           />
         )}

@@ -5,42 +5,44 @@ import DialogStartQuiz from '../_components/dialog-start-quiz';
 import { useQuizStore } from '../../../../store/quiz-store';
 import type { Category } from '../../../../types/quiz';
 import { categories } from '../../../../libs/quizList';
+import { useStartQuiz } from '../../../_hooks/use-quiz';
 
 const { Title, Paragraph, Text } = Typography;
 const { useBreakpoint } = Grid;
 
 export default function QuizList() {
   const navigate = useNavigate();
-  const fetchQuiz = useQuizStore((state) => state.fetchQuiz);
+  const { setQuestions, setStatus } = useQuizStore();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
 
   const [open, setOpen] = useState(false);
   const [quizData, setQuizData] = useState<Category>();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleStartQuiz = async (opts: {
+  const { mutate: startQuiz, isPending } = useStartQuiz({
+    onSuccess: (questions, variables) => {
+      setQuestions(questions, variables.durationMinutes);
+      setOpen(false);
+      navigate('/dashboard/quizz/active');
+    },
+    onError: () => {
+      setStatus('error');
+    },
+  });
+
+  const handleStartQuiz = (opts: {
     type: 'multiple' | 'boolean';
     difficulty: 'easy' | 'medium' | 'hard';
     durationMinutes: number;
   }) => {
     if (!quizData) return;
-    setIsLoading(true);
-    try {
-      await fetchQuiz({
-        amount: 10,
-        category: quizData.id,
-        difficulty: opts.difficulty,
-        type: opts.type,
-        durationMinutes: opts.durationMinutes,
-      });
-      setOpen(false);
-      navigate('/dashboard/quizz/active');
-    } catch (error) {
-      console.error('Gagal memulai quiz:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    startQuiz({
+      amount: 10,
+      category: quizData.id,
+      difficulty: opts.difficulty,
+      type: opts.type,
+      durationMinutes: opts.durationMinutes,
+    });
   };
 
   return (
@@ -70,8 +72,8 @@ export default function QuizList() {
                 }}
                 styles={{ body: { padding: 0, height: '100%' } }}
                 onClick={() => {
-                  setOpen(true);
                   setQuizData(category);
+                  setOpen(true);
                 }}
               >
                 <div
@@ -135,7 +137,7 @@ export default function QuizList() {
         setOpen={setOpen}
         quizData={quizData}
         onStartQuiz={handleStartQuiz}
-        isLoading={isLoading}
+        isLoading={isPending}
       />
     </div>
   );
